@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
 
   if (cmd_option_exists(argv, argv + argc, "-h"sv) || cmd_option_exists(argv, argv + argc, "--help"sv)) {
     std::cout
-      << "This program reads 4 pairs of (x, y) color space coordinates (red, gree, blue"  << "\n"
+      << "This program reads 4 pairs of (x, y) color space coordinates (red, green, blue" << "\n"
       << "primaries and white point), for example extracted from EDID, from standard"     << "\n"
       << "input and compares them with few well-known color spaces (sRGB, DCI-P3, etc.)." << "\n"
       << "As result it displays best color space match and its coverage in percents."     << "\n"
