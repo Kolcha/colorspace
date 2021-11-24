@@ -2,18 +2,26 @@
 #include <cmath>
 #include <initializer_list>
 #include <iostream>
+#include <string_view>
 #include <tuple>
 
 #include "polygon.hpp"
 
+static constexpr const std::initializer_list<point> srgb_color_space = {
+  {0.6400, 0.3300}, {0.3000, 0.6000}, {0.1500, 0.0600}
+};
+
+static constexpr const std::initializer_list<point> ntsc_color_space = {
+  {0.6700, 0.3300}, {0.2100, 0.7100}, {0.1400, 0.0800}
+};
 
 // https://en.wikipedia.org/wiki/RGB_color_spaces#RGB_color_space_specifications
 static const std::initializer_list<std::tuple<polygon, const char*>> color_spaces = {
-  {{{0.6400, 0.3300}, {0.3000, 0.6000}, {0.1500, 0.0600}}, "sRGB"},
+  {srgb_color_space,                                       "sRGB"},
   {{{0.6400, 0.3300}, {0.2100, 0.7100}, {0.1500, 0.0600}}, "Adobe RGB"},
   {{{0.6250, 0.3400}, {0.2800, 0.5950}, {0.1550, 0.0700}}, "Apple RGB"},
   {{{0.6800, 0.3200}, {0.2650, 0.6900}, {0.1500, 0.0600}}, "DCI-P3 (Display P3)"},
-  {{{0.6700, 0.3300}, {0.2100, 0.7100}, {0.1400, 0.0800}}, "NTSC-FCC"},
+  {ntsc_color_space,                                       "NTSC-FCC"},
   {{{0.7347, 0.2653}, {0.2738, 0.7174}, {0.1666, 0.0089}}, "CIE RGB"},
   {{{0.7350, 0.2650}, {0.1150, 0.8260}, {0.1570, 0.0180}}, "Wide Gamut"},
 
@@ -69,9 +77,29 @@ constexpr static inline bool fuzzy_compare(float p1, float p2)
   return (std::abs(p1 - p2) * 100000.f <= std::min(std::abs(p1), std::abs(p2)));
 }
 
-
-int main()
+static inline bool cmd_option_exists(char** begin, char** end, std::string_view opt)
 {
+  return std::find(begin, end, opt) != end;
+}
+
+static inline float colorspace_coverage(const polygon& space, const polygon& display)
+{
+  return 100.f * (display & space).area() / space.area();
+}
+
+
+int main(int argc, char* argv[])
+{
+  using namespace std::literals;
+
+  if (cmd_option_exists(argv, argv + argc, "-h"sv) || cmd_option_exists(argv, argv + argc, "--help"sv)) {
+    std::cout << "help!" << std::endl;
+    return 0;
+  }
+
+  bool compare_to_ntsc = cmd_option_exists(argv, argv + argc, "--ntsc"sv);
+  bool compare_to_srgb = cmd_option_exists(argv, argv + argc, "--srgb"sv);
+
   polygon display(3);
   for (auto& p : display) {
     std::cin >> p.x >> p.y;
@@ -99,7 +127,17 @@ int main()
     }
   }
 
-  std::cout << "colorspace coverage: " << max_inter_percent << "% " << max_inter_name << std::endl;
+  char space = compare_to_ntsc || compare_to_srgb ? '\t' : ' ';
+
+  std::cout << "colorspace coverage: " << max_inter_percent << "%" << space << max_inter_name << std::endl;
+
+  if (compare_to_ntsc) {
+    std::cout << "                     " << colorspace_coverage(ntsc_color_space, display) << "%\tNTSC" << std::endl;
+  }
+
+  if (compare_to_srgb) {
+    std::cout << "                     " << colorspace_coverage(srgb_color_space, display) << "%\tsRGB" << std::endl;
+  }
 
 
   auto nearest_wp_iter = std::min_element(white_points.begin(), white_points.end(), [&](const auto& lhs, const auto& rhs) {
