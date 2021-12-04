@@ -15,7 +15,6 @@ static constexpr const std::initializer_list<point> ntsc_color_space = {
   {0.6700, 0.3300}, {0.2100, 0.7100}, {0.1400, 0.0800}
 };
 
-// https://en.wikipedia.org/wiki/RGB_color_spaces#RGB_color_space_specifications
 static const std::initializer_list<std::tuple<polygon, const char*>> color_spaces = {
   {srgb_color_space,                                       "sRGB"               },
   {{{0.6400, 0.3300}, {0.2100, 0.7100}, {0.1500, 0.0600}}, "Adobe RGB"          },
@@ -31,7 +30,6 @@ static const std::initializer_list<std::tuple<polygon, const char*>> color_space
   {{{0.7080, 0.2920}, {0.1700, 0.7970}, {0.1310, 0.0460}}, "BT.2020"            },
 };
 
-// https://en.wikipedia.org/wiki/Standard_illuminant#White_points_of_standard_illuminants
 static constexpr const std::initializer_list<std::tuple<point, int, const char*>> white_points = {
   {{0.44757, 0.40745}, 2856, "A"       },
   {{0.34842, 0.35161}, 4874, "B"       },
