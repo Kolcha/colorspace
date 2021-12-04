@@ -7,20 +7,12 @@
 
 #include "polygon.hpp"
 
-static constexpr const std::initializer_list<point> srgb_color_space = {
-  {0.6400, 0.3300}, {0.3000, 0.6000}, {0.1500, 0.0600}
-};
-
-static constexpr const std::initializer_list<point> ntsc_color_space = {
-  {0.6700, 0.3300}, {0.2100, 0.7100}, {0.1400, 0.0800}
-};
-
 static const std::initializer_list<std::tuple<polygon, const char*>> color_spaces = {
-  {srgb_color_space,                                       "sRGB"               },
+  {{{0.6400, 0.3300}, {0.3000, 0.6000}, {0.1500, 0.0600}}, "sRGB"               },
   {{{0.6400, 0.3300}, {0.2100, 0.7100}, {0.1500, 0.0600}}, "Adobe RGB"          },
   {{{0.6250, 0.3400}, {0.2800, 0.5950}, {0.1550, 0.0700}}, "Apple RGB"          },
   {{{0.6800, 0.3200}, {0.2650, 0.6900}, {0.1500, 0.0600}}, "DCI-P3 (Display P3)"},
-  {ntsc_color_space,                                       "NTSC-FCC"           },
+  {{{0.6700, 0.3300}, {0.2100, 0.7100}, {0.1400, 0.0800}}, "NTSC-FCC"           },
   {{{0.7347, 0.2653}, {0.2738, 0.7174}, {0.1666, 0.0089}}, "CIE RGB"            },
   {{{0.7350, 0.2650}, {0.1150, 0.8260}, {0.1570, 0.0180}}, "Wide Gamut"         },
 
@@ -147,10 +139,12 @@ int main(int argc, char* argv[])
   std::cout << "colorspace coverage: " << max_inter_percent << "%" << space_ch << max_inter_name << std::endl;
 
   if (compare_to_ntsc) {
+    const auto&[ntsc_color_space, _] = *(color_spaces.begin() + 4);
     std::cout << "                     " << colorspace_coverage(ntsc_color_space, display) << "%\tNTSC" << std::endl;
   }
 
   if (compare_to_srgb) {
+    const auto&[srgb_color_space, _] = *(color_spaces.begin() + 0);
     std::cout << "                     " << colorspace_coverage(srgb_color_space, display) << "%\tsRGB" << std::endl;
   }
 
