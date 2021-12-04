@@ -86,7 +86,7 @@ void sort_polygon_points(polygon& p)
 {
   if (p.empty()) return;
   point center = get_polygon_center(p);
-  auto angle = [&](const point& pt) { return atan2f((pt.y - center.y),(pt.x - center.x)); };
+  auto angle = [&](const point& pt) { return atan2f((pt.y - center.y), (pt.x - center.x)); };
   std::sort(p.begin(), p.end(), [&](const auto& lhs, const auto& rhs) { return angle(lhs) < angle(rhs); });
 }
 

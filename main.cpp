@@ -31,7 +31,6 @@ static const std::initializer_list<std::tuple<polygon, const char*>> color_space
   {{{0.7080, 0.2920}, {0.1700, 0.7970}, {0.1310, 0.0460}}, "BT.2020"            },
 };
 
-
 // https://en.wikipedia.org/wiki/Standard_illuminant#White_points_of_standard_illuminants
 static constexpr const std::initializer_list<std::tuple<point, int, const char*>> white_points = {
   {{0.44757, 0.40745}, 2856, "A"       },
@@ -156,7 +155,6 @@ int main(int argc, char* argv[])
   if (compare_to_srgb) {
     std::cout << "                     " << colorspace_coverage(srgb_color_space, display) << "%\tsRGB" << std::endl;
   }
-
 
   auto nearest_wp_iter = std::min_element(white_points.begin(), white_points.end(), [&](const auto& lhs, const auto& rhs) {
     const auto&[lp, lt, ln] = lhs;

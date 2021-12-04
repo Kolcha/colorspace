@@ -24,7 +24,7 @@ class polygon : public polygon_underlying_type
 public:
   using polygon_underlying_type::polygon_underlying_type;
 
-  float area() const ;
+  float area() const;
 
   bool contains(const point& p) const;
 };
