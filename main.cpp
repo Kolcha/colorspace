@@ -93,25 +93,25 @@ int main(int argc, char* argv[])
 
   if (cmd_option_exists(argv, argv + argc, "-h"sv) || cmd_option_exists(argv, argv + argc, "--help"sv)) {
     std::cout
-      << "This program reads 4 pairs of (x, y) color space coordinates (red, green, blue" << "\n"
-      << "primaries and white point), for example extracted from EDID, from standard"     << "\n"
-      << "input and compares them with few well-known color spaces (sRGB, DCI-P3, etc.)." << "\n"
-      << "As result it displays best color space match and its coverage in percents."     << "\n"
-      << "Also it finds best match for one of standard white points."                     << "\n"
-      << "\n"
-      << "Except finding best match color space, program can compare given color space"   << "\n"
-      << "to few predefined standard color spaces, see supported options for details."    << "\n"
-      << "\n"
-      << "Supported options:"                                                             << "\n"
-      << "  -h, --help    display this help message and exit"                             << "\n"
-      << "\n"
-      << "  --ntsc        also compare to NTSC color space"                               << "\n"
-      << "  --srgb        also compare to sRGB color space"                               << "\n"
-      << "\n"
-      << "Any unsupported options are silently ignored."                                  << "\n"
-      << "\n"
-      << "Copyright (c) 2021 Nick Korotysh, MIT License"
-      << std::endl;
+        << "This program reads 4 pairs of (x, y) color space coordinates (red, green, blue" << "\n"
+        << "primaries and white point), for example extracted from EDID, from standard"     << "\n"
+        << "input and compares them with few well-known color spaces (sRGB, DCI-P3, etc.)." << "\n"
+        << "As result it displays best color space match and its coverage in percents."     << "\n"
+        << "Also it finds best match for one of standard white points."                     << "\n"
+        << "\n"
+        << "Except finding best match color space, program can compare given color space"   << "\n"
+        << "to few predefined standard color spaces, see supported options for details."    << "\n"
+        << "\n"
+        << "Supported options:"                                                             << "\n"
+        << "  -h, --help    display this help message and exit"                             << "\n"
+        << "\n"
+        << "  --ntsc        also compare to NTSC color space"                               << "\n"
+        << "  --srgb        also compare to sRGB color space"                               << "\n"
+        << "\n"
+        << "Any unsupported options are silently ignored."                                  << "\n"
+        << "\n"
+        << "Copyright (c) 2021 Nick Korotysh, MIT License"
+        << std::endl;
     return 0;
   }
 
